@@ -54,6 +54,45 @@ $(function(){
 			
 			      });
 	});
+	$('#login').on('click',function(){
+		var $login1 = $('#login1');
+		var $login2 = $('#login2');
+		var res= {
+				login1: $login1.val(),
+				login2: $login2.val(),
+				
+			      }; 
+		var two = JSON.stringify(res);
+		$.ajax({
+			type:'post',
+			contentType: 'application/json',
+		    url : '/request',
+		    data: two,
+		    dataType: 'json',
+		    cache: false,
+		    success: function(data)
+		    {
+		    	
+		    	/*var jon=JSON.stringify(data);*/
+		    	
+		    	/*$('#feedback').load(data);*/
+		    	
+		    	var jon=JSon.stringify(data);
+		    	
+		    	alert(jon);
+		    
+		    
+		    
+		    },
+		    error: function(data){
+		    	var jon=JSON.stringify(data);
+		    	alert(jon);
+		    }
+		   
+		
+		      });
+	
+});
 	});
 
 
