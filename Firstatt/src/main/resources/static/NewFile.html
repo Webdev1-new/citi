@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	
+	$('#id8').on('click',function(){
+		var $order= $('#order');	
+		var $id1 = $('#id1');
+		var $id2 = $('#id2');
+		var $id3 = $('#id3');
+		var $id4 = $('#id4');
+		var $id5 = $('#id5');
+		var $id6 = $('#id6');
+		var $id7 = $('#id7');
+	var res= {
+		id1: $id1.val(),
+		id2: $id2.val(),
+		id3: $id3.val(),
+		id4: $id4.val(),
+		id5: $id5.val(),
+		id6: $id6.val(),
+		id7: $id7.val(),
+	         }; 
+	var rest = JSON.stringify(res);
+			$.ajax({
+				type:'post',
+				contentType: 'application/json',
+			    url : '/request',
+			    data: rest,
+			    dataType: 'json',
+			    cache: false,
+			    success: function(data)
+			    {
+			    	
+			    	/*var jon=JSON.stringify(data);*/
+			    	
+			    	/*$('#feedback').load(data);*/
+			    	
+			    	var jon=JSon.stringify(data);
+			    	
+			    	alert(jon);
+			    
+			    
+			    
+			    },
+			    error: function(data){
+			    	var jon=JSON.stringify(data);
+			    	alert(jon);
+			    }
+			   
+			
+			      });
+	});
+	});
+
+
+</script>
+</head>
+<body>
+
+
+<div id="First"> 
+<h1>Please Register</h1>
+<table>
+<tr>
+       <td> USERNAME:</td><td><input type="text" name="it1" id="id1" maxlength =8 ></td>
+</tr>
+<tr>
+          <td>EMP_ID:</td><td><input type="text" name="it2" id="id2"  required></td>
+</tr>          
+<tr>
+    <td> DESIGNATION:</td><td><input type="text" name="it3" id="id3" maxlength ="25" data-minlength="3"></td>
+</tr>
+<tr>
+           <td>EMAIL:</td><td><input type="email" name="it4" id="id4"></td>
+</tr>
+<tr>
+        <td>PASSWORD:</td><td><input type="Password" name="it5" id="id5"></td>
+</tr>
+<tr>
+<td>
+SECURITY QUESTION:</td><td><select id="id6" name="security">
+<option value="tree">Your Project Name</option>
+<option value="tree1">Your ODC Number</option>
+<option value="tree2">Your Reporting location</option>
+</select></td>
+</tr>
+<tr>
+
+     <td> YOUR ANSWER:</td><td><input type="text" id="id7" name="answer" maxlength ="25" data-minlength="3"></td>
+</tr>
+<tr>
+                <td><button id="id8" >Click</button> </td>
+                  
+</tr>
+</table>
+</div>
+<div id="second">
+<table>
+<tr>
+<td>          <h2>LOGIN FORM</h2>
+</td>
+</tr>
+<tr>
+<td>          <input type="text" id="login1" placeholder="Emp_id">  </td>
+</tr>
+<tr>
+<td>         <input type="password" id="login2" placeholder="password"> </td>
+</tr>
+<tr>
+<td><button id="login">LOGIN</button>     </td>
+</tr>
+</table>
+
+</div>                  
+</body>
+</html>
