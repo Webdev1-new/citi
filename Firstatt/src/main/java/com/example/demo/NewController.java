@@ -13,6 +13,8 @@ public class NewController {
 
 	@Autowired
 	Ram ram;
+	@Autowired
+	Login log;
 	
 	@RequestMapping("/")
 	String homepage()
@@ -49,8 +51,24 @@ public ResponseEntity<?> noReturn(@RequestBody SimplPojo simplpojo)
 public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo) 
 
 {
-	return  new ResponseEntity<String>("good job",HttpStatus.OK);
+	if(ram.findById(loginpojo.getLogin1()).orElse(null)==null)
+	{
+	   return  new ResponseEntity<String>("NOT registered",HttpStatus.BAD_REQUEST);
+	   
 	
+    }
+	else
+	{
+		if(loginpojo.getLogin2().equals(ram.findById(loginpojo.getLogin1()).orElse(null).getId5() ))
+		{
+		     log.save(loginpojo);
+			return new ResponseEntity<String>("login sucessful",HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<String>("Please provide correct password",HttpStatus.BAD_REQUEST);
+		}
+	}
 }
 }
 

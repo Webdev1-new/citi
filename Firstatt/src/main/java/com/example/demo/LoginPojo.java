@@ -1,6 +1,11 @@
 package com.example.demo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class LoginPojo {
+	@Id
 	private String login1;
 	private String login2;
 	public String getLogin1() {

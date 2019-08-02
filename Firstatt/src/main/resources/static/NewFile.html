@@ -42,6 +42,12 @@ $(function(){
 			    	var jon=JSon.stringify(data);
 			    	
 			    	alert(jon);
+			    	
+			    	$('#id9').on('click',function(){
+			    		$("#first").hide();
+			    		$('#second').show();
+			    		
+			    	});
 			    
 			    
 			    
@@ -66,7 +72,7 @@ $(function(){
 		$.ajax({
 			type:'post',
 			contentType: 'application/json',
-		    url : '/request',
+		    url : '/logrequest',
 		    data: two,
 		    dataType: 'json',
 		    cache: false,
@@ -80,6 +86,7 @@ $(function(){
 		    	var jon=JSon.stringify(data);
 		    	
 		    	alert(jon);
+		    	
 		    
 		    
 		    
@@ -132,12 +139,13 @@ SECURITY QUESTION:</td><td><select id="id6" name="security">
      <td> YOUR ANSWER:</td><td><input type="text" id="id7" name="answer" maxlength ="25" data-minlength="3"></td>
 </tr>
 <tr>
-                <td><button id="id8" >Click</button> </td>
+                <td><button id="id8" >Click</button> 
+                <button id="id9">continue to  Login</button></td>
                   
 </tr>
 </table>
 </div>
-<div id="second">
+<div id="second" >
 <table>
 <tr>
 <td>          <h2>LOGIN FORM</h2>
@@ -152,8 +160,37 @@ SECURITY QUESTION:</td><td><select id="id6" name="security">
 <tr>
 <td><button id="login">LOGIN</button>     </td>
 </tr>
+<tr>
+<td><button id="forget">Forget Password</button>
+<button id="register">Continue to register</button></td>
+</tr>
 </table>
 
-</div>                  
+</div>  
+<div id="fourth"  >
+<h3>RESET PASSWORD</h3>
+<table>
+<tr>
+          <td>EMP_ID:</td><td><input type="text" name="it2" id="id2"  required></td>
+</tr> 
+<tr>
+<td>
+SECURITY QUESTION:</td><td><select id="id6" name="security">
+<option value="tree">Your Project Name</option>
+<option value="tree1">Your ODC Number</option>
+<option value="tree2">Your Reporting location</option>
+</select></td>
+</tr>
+<tr>
+
+     <td> YOUR ANSWER:</td><td><input type="text" id="id7" name="answer" maxlength ="25" data-minlength="3"></td>
+</tr>
+<tr>
+<td>New Password</td>
+<td>         <input type="password" id="login2" placeholder="password"> </td>
+</tr>
+</table>
+
+</div>              
 </body>
 </html>
