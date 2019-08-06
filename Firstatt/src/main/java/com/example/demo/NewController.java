@@ -70,5 +70,33 @@ public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo)
 		}
 	}
 }
+@PostMapping("/resetrequest")
+public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo) 
+{
+	if(ram.existsById(forgetpojo.getResetid()))
+	{
+		SimplPojo spojo=ram.findById(forgetpojo.getResetid()).orElse(null);
+		if(spojo.getId6().equals(forgetpojo.getQuestion()) && spojo.getId7().equals(forgetpojo.getSecret()))
+           {
+			spojo.setId5(forgetpojo.getResetlogin());
+			ram.save(spojo);
+			return new ResponseEntity<String>("Password updated Succesfully",HttpStatus.OK);
+           }
+		else
+		{
+			return new ResponseEntity<String>("Please provide correct security question and answer",HttpStatus.BAD_REQUEST);
+		}
+	}
+	else
+	{
+		return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	
+	
 }
+
+}
+
 

@@ -43,11 +43,7 @@ $(function(){
 			    	
 			    	alert(jon);
 			    	
-			    	$('#id9').on('click',function(){
-			    		$("#first").hide();
-			    		$('#second').show();
-			    		
-			    	});
+			    	
 			    
 			    
 			    
@@ -60,6 +56,21 @@ $(function(){
 			
 			      });
 	});
+	
+	
+	$('#id9').on('click',function(){
+		$('#First').hide();
+		$('#second').show();
+	});
+	
+	
+	$('#forget').on('click',function(){
+		$('#second').hide();
+		$('#fourth').show();
+	});
+	
+	
+	
 	$('#login').on('click',function(){
 		var $login1 = $('#login1');
 		var $login2 = $('#login2');
@@ -100,7 +111,53 @@ $(function(){
 		      });
 	
 });
-	});
+$('#fourthbutton').on('click',function(){
+	var $resetid = $('#resetid');
+	var $question= $('#question');
+	var $secret = $('#secret');
+	var $resetlogin = $('#resetlogin');
+	var reset= {
+			resetid: $resetid.val(),
+			question: $question.val(),
+			secret: $secret.val(),
+	        resetlogin: $resetlogin.val(),
+			
+		      }; 
+	var four= JSON.stringify(reset);
+	$.ajax({
+		type:'post',
+		contentType: 'application/json',
+	    url : '/resetrequest',
+	    data: four,
+	    dataType: 'json',
+	    cache: false,
+	    success: function(data)
+	    {
+	    	
+	    	/*var jon=JSON.stringify(data);*/
+	    	
+	    	/*$('#feedback').load(data);*/
+	    	
+	    	var jon=JSon.stringify(data);
+	    	
+	    	alert(jon);
+	    	
+	    
+	    
+	    
+	    },
+	    error: function(data){
+	    	var jon=JSON.stringify(data);
+	    	alert(jon);
+	    }
+	   
+	
+	      });
+
+});
+});
+
+
 
 
 </script>
@@ -145,11 +202,10 @@ SECURITY QUESTION:</td><td><select id="id6" name="security">
 </tr>
 </table>
 </div>
-<div id="second" >
+<div id="second" hidden="true">
 <table>
 <tr>
-<td>          <h2>LOGIN FORM</h2>
-</td>
+<td>          <h2>LOGIN FORM</h2></td>
 </tr>
 <tr>
 <td>          <input type="text" id="login1" placeholder="Emp_id">  </td>
@@ -167,15 +223,15 @@ SECURITY QUESTION:</td><td><select id="id6" name="security">
 </table>
 
 </div>  
-<div id="fourth"  >
+<div id="fourth" hidden="true" >
 <h3>RESET PASSWORD</h3>
 <table>
 <tr>
-          <td>EMP_ID:</td><td><input type="text" name="it2" id="id2"  required></td>
+          <td>EMP_ID:</td><td><input type="text" name="it2" id="resetid"  required></td>
 </tr> 
 <tr>
 <td>
-SECURITY QUESTION:</td><td><select id="id6" name="security">
+SECURITY QUESTION:</td><td><select id="question" name="security">
 <option value="tree">Your Project Name</option>
 <option value="tree1">Your ODC Number</option>
 <option value="tree2">Your Reporting location</option>
@@ -183,11 +239,16 @@ SECURITY QUESTION:</td><td><select id="id6" name="security">
 </tr>
 <tr>
 
-     <td> YOUR ANSWER:</td><td><input type="text" id="id7" name="answer" maxlength ="25" data-minlength="3"></td>
+     <td> YOUR ANSWER:</td><td><input type="text" id="secret" name="answer" maxlength ="25" data-minlength="3"></td>
 </tr>
 <tr>
 <td>New Password</td>
-<td>         <input type="password" id="login2" placeholder="password"> </td>
+<td>         <input type="password" id="resetlogin" placeholder="password"> </td>
+</tr>
+<tr>
+<td>
+<button id="fourthbutton">Reset Password</button>
+</td>
 </tr>
 </table>
 
