@@ -1,9 +1,14 @@
 package com.example.demo;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,9 +54,11 @@ public ResponseEntity<?> noReturn(@RequestBody SimplPojo simplpojo)
 
 @PostMapping("/logrequest")
 public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo) 
-
 {
-	if(ram.findById(loginpojo.getLogin1()).orElse(null)==null)
+    
+	
+
+    if(ram.findById(loginpojo.getLogin1()).orElse(null)==null)
 	{
 	   return  new ResponseEntity<String>("NOT registered",HttpStatus.BAD_REQUEST);
 	   
@@ -62,14 +69,17 @@ public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo)
 		if(loginpojo.getLogin2().equals(ram.findById(loginpojo.getLogin1()).orElse(null).getId5() ))
 		{
 		     log.save(loginpojo);
-			return new ResponseEntity<String>("login sucessful",HttpStatus.OK);
+		    
+		    return new ResponseEntity<String>("login sucessful",HttpStatus.OK);
 		}
 		else
 		{
 			return new ResponseEntity<String>("Please provide correct password",HttpStatus.BAD_REQUEST);
 		}
 	}
+   
 }
+	
 @PostMapping("/resetrequest")
 public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo) 
 {
@@ -78,9 +88,9 @@ public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo)
 		SimplPojo spojo=ram.findById(forgetpojo.getResetid()).orElse(null);
 		if(spojo.getId6().equals(forgetpojo.getQuestion()) && spojo.getId7().equals(forgetpojo.getSecret()))
            {
-			spojo.setId5(forgetpojo.getResetlogin());
-			ram.save(spojo);
-			return new ResponseEntity<String>("Password updated Succesfully",HttpStatus.OK);
+			  spojo.setId5(forgetpojo.getResetlogin());
+			  ram.save(spojo);
+			  return new ResponseEntity<String>("Password updated Succesfully",HttpStatus.OK);
            }
 		else
 		{
@@ -96,7 +106,19 @@ public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo)
 	
 	
 }
-
+@GetMapping("/logoutrequest")
+ public ResponseEntity<?> logoutRequest()
+{
+	return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.OK);
+}
 }
 
+/*@GetMapping("")
+public ResponseEntity<?> getInfo(@RequestBody String name)
+{
+	List<SimplPojo> stored=ram.findAllById() ;
+	List<SimplPojo> stored1=ram.findAllById(); 
+	return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.OK);
+}
+}*/
 

@@ -30,18 +30,13 @@ $(function(){
 				contentType: 'application/json',
 			    url : '/request',
 			    data: rest,
-			    dataType: 'json',
 			    cache: false,
 			    success: function(data)
 			    {
 			    	
-			    	/*var jon=JSON.stringify(data);*/
 			    	
-			    	/*$('#feedback').load(data);*/
 			    	
-			    	var jon=JSon.stringify(data);
-			    	
-			    	alert(jon);
+			    	alert("How are you");
 			    	
 			    	
 			    
@@ -49,8 +44,8 @@ $(function(){
 			    
 			    },
 			    error: function(data){
-			    	var jon=JSON.stringify(data);
-			    	alert(jon);
+			    	/*var jon=JSON.stringify(data);*/
+			    	alert("i am fine");
 			    }
 			   
 			
@@ -85,7 +80,6 @@ $(function(){
 			contentType: 'application/json',
 		    url : '/logrequest',
 		    data: two,
-		    dataType: 'json',
 		    cache: false,
 		    success: function(data)
 		    {
@@ -94,10 +88,12 @@ $(function(){
 		    	
 		    	/*$('#feedback').load(data);*/
 		    	
-		    	var jon=JSon.stringify(data);
+		    	/*var jon=JSon.stringify(data);
 		    	
-		    	alert(jon);
-		    	
+		    	alert(jon);*/
+		    	$('#second').hide();
+				$('#third').show();
+		    	alert('you have succesfully registered');
 		    
 		    
 		    
@@ -134,14 +130,40 @@ $('#fourthbutton').on('click',function(){
 	    success: function(data)
 	    {
 	    	
-	    	/*var jon=JSON.stringify(data);*/
 	    	
-	    	/*$('#feedback').load(data);*/
 	    	
-	    	var jon=JSon.stringify(data);
+	    	var jon=JSON.stringify(data);
 	    	
 	    	alert(jon);
 	    	
+	    
+	    
+	    
+	    },
+	    error: function(data){
+	    	var jon=JSON.stringify(data);
+	    	alert(" please provide correct credentials");
+	    }
+	   
+	
+	      });
+
+});
+
+$('#logout').on('click',function(){
+	
+	$.ajax({
+		type:'get',
+		contentType: 'application/json',
+	    url : '/logoutrequest',
+	    cache: false,
+	    success: function(data)
+	    {
+	    	
+	    	
+	    	$('#third').hide();
+			$('#second').show();
+	    	alert('you have logged out succesfully');
 	    
 	    
 	    
@@ -155,6 +177,31 @@ $('#fourthbutton').on('click',function(){
 	      });
 
 });
+
+$('#search').on('click',function(){
+	
+	$.ajax({
+		type:'get',
+		contentType: 'application/json',
+	    url : '/getinforequest',
+	    cache: false,
+	    success: function(data)
+	    {
+	    	$('#third').hide();
+			$('#second').show();
+	    	alert('you have logged out succesfully'); 
+	    },
+	    error: function(data){
+	    	var jon=JSON.stringify(data);
+	    	alert(jon);
+	    }
+	   
+	
+	      });
+
+});
+
+
 });
 
 
@@ -251,6 +298,13 @@ SECURITY QUESTION:</td><td><select id="question" name="security">
 </td>
 </tr>
 </table>
+</div>
+<div id="third" hidden="true">
+
+<h4>Welcome</h4>
+<input type="text" id="search" name="searching" placeholder="find employees by name or emp_id">
+<button id="searchemp">SEARCH</button>
+<button id="logout">logout</button>
 
 </div>              
 </body>
