@@ -1,6 +1,7 @@
 package com.example.demo;
 import java.util.List;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class NewController {
 	Ram ram;
 	@Autowired
 	Login log;
+	@Autowired
+	Request1 request;
+	@Autowired
+	Response response;
 	
 	@RequestMapping("/")
 	String homepage()
@@ -31,21 +36,30 @@ public class NewController {
 		
 	}
 
-@PostMapping("/request")
-public ResponseEntity<?> noReturn(@RequestBody SimplPojo simplpojo) 
+@PostMapping("/request1")
+public ResponseEntity<?> noReturn1(@RequestBody SimplPojo simplpojo) 
+
+	{
+	  request.save(simplpojo);
+	  return new ResponseEntity<String>("sucessfully registered",HttpStatus.OK);
+		
+	}	
+
+@PostMapping("/request2")
+public ResponseEntity<?> noReturn2(@RequestBody SimplPojo1 simplpojo) 
 
 {
-	if(ram.findById(simplpojo.getId2()).orElse(null)==null)
+	if(ram.findById(simplpojo.getId5()).orElse(null)==null)
 	{  
 
-		 System.out.println(simplpojo.getId2());
+		 System.out.println(simplpojo.getId5());
 	     ram.save(simplpojo);
 	     return new ResponseEntity<String>("sucessfully registered",HttpStatus.OK);
 	  
 	}
 	else
 	{
-		System.out.println(simplpojo.getId2());
+		System.out.println(simplpojo.getId5());
 		return new ResponseEntity<String>("Emp_id already exixts",HttpStatus.BAD_REQUEST);
     }
 	
@@ -66,7 +80,7 @@ public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo)
     }
 	else
 	{
-		if(loginpojo.getLogin2().equals(ram.findById(loginpojo.getLogin1()).orElse(null).getId5() ))
+		if(loginpojo.getLogin2().equals(ram.findById(loginpojo.getLogin1()).orElse(null).getId6() ))
 		{
 		     log.save(loginpojo);
 		    
@@ -85,10 +99,10 @@ public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo)
 {
 	if(ram.existsById(forgetpojo.getResetid()))
 	{
-		SimplPojo spojo=ram.findById(forgetpojo.getResetid()).orElse(null);
-		if(spojo.getId6().equals(forgetpojo.getQuestion()) && spojo.getId7().equals(forgetpojo.getSecret()))
+		SimplPojo1 spojo=ram.findById(forgetpojo.getResetid()).orElse(null);
+		if(spojo.getId7().equals(forgetpojo.getQuestion()) && spojo.getId8().equals(forgetpojo.getSecret()))
            {
-			  spojo.setId5(forgetpojo.getResetlogin());
+			  spojo.setId6(forgetpojo.getResetlogin());
 			  ram.save(spojo);
 			  return new ResponseEntity<String>("Password updated Succesfully",HttpStatus.OK);
            }
@@ -111,14 +125,24 @@ public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo)
 {
 	return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.OK);
 }
-}
 
-/*@GetMapping("")
+
+@PostMapping("/getinforequest")
 public ResponseEntity<?> getInfo(@RequestBody String name)
 {
-	List<SimplPojo> stored=ram.findAllById() ;
-	List<SimplPojo> stored1=ram.findAllById(); 
-	return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.OK);
+	 response.getinfo=request.findByid3(name) ;
+	 response.getinfo1=request.findByid4(name);
+	 if(response.getinfo.isEmpty() && response.getinfo.isEmpty())
+	 {
+		 return new ResponseEntity<String>("No such users exist",HttpStatus.BAD_REQUEST);
+	 }
+	 else
+	 {
+		 response.msg="success";
+		 return new ResponseEntity<Response>(response,HttpStatus.OK);
+		 
+	 }
+	
 }
-}*/
+}
 

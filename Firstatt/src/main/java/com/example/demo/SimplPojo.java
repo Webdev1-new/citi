@@ -11,15 +11,8 @@ public class SimplPojo {
 	private String id2;
 	private String id3;
 	private String id4;
-	private String id5;
-	private String id6;
-	private String id7;
-	public String getId7() {
-		return id7;
-	}
-	public void setId7(String id7) {
-		this.id7 = id7;
-	}
+	
+	
 	public String getId1() {
 		return id1;
 	}
@@ -44,18 +37,5 @@ public class SimplPojo {
 	public void setId4(String id4) {
 		this.id4 = id4;
 	}
-	public String getId5() {
-		return id5;
-	}
-	public void setId5(String id5) {
-		this.id5 = id5;
-	}
-	public String getId6() {
-		return id6;
-	}
-	public void setId6(String id6) {
-		this.id6 = id6;
-	}
 	
-
 }
