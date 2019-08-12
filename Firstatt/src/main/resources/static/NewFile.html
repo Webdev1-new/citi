@@ -124,7 +124,7 @@ $(function(){
 		    success: function(data)
 		    {
 		    	
-		    	/*var jon=JSON.stringify(data);*/
+		    	var jon=JSON.stringify(data);
 		    	
 		    	/*$('#feedback').load(data);*/
 		    	
@@ -133,7 +133,7 @@ $(function(){
 		    	alert(jon);*/
 		    	$('#second').hide();
 				$('#third').show();
-		    	alert('you have succesfully registered');
+		    	alert(data);
 		    
 		    
 		    
@@ -219,7 +219,7 @@ $('#logout').on('click',function(){
 });
 
 $('#searchemp').on('click',function(){
-	var $search = $('search');
+	var $search = $('#search');
 	var info= {
 			search: $search.val(),
 			  }; 
@@ -229,15 +229,20 @@ $('#searchemp').on('click',function(){
 		contentType: 'application/json',
 	    url : '/getinforequest',
 	    data: information,
+	    dataType: 'json',
 	    cache: false,
 	    success: function(data)
 	    {
-	     var josn="<h4>Search Result</h4><pre>"	+data.responseText+ "</pre>";
-	     $('show').html(josn);
+	    	 var json=JSON.stringify(data);
+	    	 alert(json);
+	         console.log("success :",data);
+	         var josn="<h4>Search Result</h4><pre>"	+JSON.stringify(data,null,4)+ "</pre>";
+	         $('#show').html(josn);
 	    },
 	    error: function(data){
-	    	var josn="<h4>Search Result</h4><pre>"	+data.responseText+ "</pre>";
-		     $('show').html(josn);
+	    
+	    	var josn="<h4>Search Result</h4><pre>"	+"No users found"+ "</pre>";
+		     $('#show').html(josn);
 	    }
 	   
 	

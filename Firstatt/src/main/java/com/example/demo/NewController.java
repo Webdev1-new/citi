@@ -1,4 +1,5 @@
 package com.example.demo;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class NewController {
@@ -25,6 +27,7 @@ public class NewController {
 	Request1 request;
 	@Autowired
 	Response response;
+	HashMap<String,String> map=new HashMap<>();
 	
 	@RequestMapping("/")
 	String homepage()
@@ -49,6 +52,7 @@ public ResponseEntity<?> noReturn1(@RequestBody SimplPojo simplpojo)
 public ResponseEntity<?> noReturn2(@RequestBody SimplPojo1 simplpojo) 
 
 {
+
 	if(ram.findById(simplpojo.getId5()).orElse(null)==null)
 	{  
 
@@ -67,10 +71,16 @@ public ResponseEntity<?> noReturn2(@RequestBody SimplPojo1 simplpojo)
 
 
 @PostMapping("/logrequest")
-public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo) 
+public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo,HttpSession session) 
 {
+    if(map.containsKey(session.getId()))
+    {
+    	return new ResponseEntity<String>("Redirecting",HttpStatus.OK);
+    }
+    else
+    {
+    	map.put(session.getId(), loginpojo.getLogin1());
     
-	
 
     if(ram.findById(loginpojo.getLogin1()).orElse(null)==null)
 	{
@@ -91,6 +101,7 @@ public ResponseEntity<?> logReturn(@RequestBody LoginPojo loginpojo)
 			return new ResponseEntity<String>("Please provide correct password",HttpStatus.BAD_REQUEST);
 		}
 	}
+    }
    
 }
 	
@@ -121,25 +132,37 @@ public ResponseEntity<?>  resetReturn(@RequestBody ForgetPojo forgetpojo)
 	
 }
 @GetMapping("/logoutrequest")
- public ResponseEntity<?> logoutRequest()
+ public ResponseEntity<?> logoutRequest(HttpSession session)
 {
+	map.remove(session.getId());
+	session.invalidate();
 	return new ResponseEntity<String>("Please provide correct credentials",HttpStatus.OK);
 }
 
 
 @PostMapping("/getinforequest")
-public ResponseEntity<?> getInfo(@RequestBody String name)
+public ResponseEntity<?> getInfo(@RequestBody Searchmap name)
 {
-	 response.getinfo=request.findByid3(name) ;
-	 response.getinfo1=request.findByid4(name);
-	 if(response.getinfo.isEmpty() && response.getinfo.isEmpty())
+	System.out.println(name.getSearch());
+	 List<SimplPojo> result= request.findById3(name.getSearch()) ;
+	 List<SimplPojo> result1= request.findById4(name.getSearch());
+	 if(result!=null)
+	 {
+		 for(SimplPojo ob:result)
+		 {
+			System.out.println(ob.getId1()+ " "+ob.getId2()+ " "+ob.getId3()+" "+ob.getId4()) ;
+		 }
+	 }
+	 if(result==null && result1==null)
 	 {
 		 return new ResponseEntity<String>("No such users exist",HttpStatus.BAD_REQUEST);
 	 }
 	 else
 	 {
-		 response.msg="success";
-		 return new ResponseEntity<Response>(response,HttpStatus.OK);
+		 response.setMsg("success");
+		 response.setGetinfo(result);
+		 response.setGetinfo1(result1);
+		 return  new ResponseEntity<Response>(response,HttpStatus.OK);
 		 
 	 }
 	
